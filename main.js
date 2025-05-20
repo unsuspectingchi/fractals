@@ -1,9 +1,3 @@
-// Remove import statements since we're using global THREE object
-// import * as THREE from 'three';
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-// import './menu.js';
-
 // Create scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
