@@ -104,12 +104,23 @@
     </div>
     
     <!-- Three.js and dependencies from CDN -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.162.0/three.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.162.0/three.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/loaders/GLTFLoader.js"></script>
     
-    <!-- Our scripts -->
-    <script defer src="menu.js"></script>
-    <script defer src="main.js"></script>
+    <!-- Our scripts - load after Three.js is ready -->
+    <script type="text/javascript">
+        // Wait for Three.js to be fully loaded
+        window.addEventListener('load', function() {
+            // Load our scripts after Three.js is ready
+            const menuScript = document.createElement('script');
+            menuScript.src = 'menu.js';
+            document.body.appendChild(menuScript);
+
+            const mainScript = document.createElement('script');
+            mainScript.src = 'main.js';
+            document.body.appendChild(mainScript);
+        });
+    </script>
 </body>
 </html> 
