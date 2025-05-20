@@ -108,19 +108,35 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/loaders/GLTFLoader.js"></script>
     
-    <!-- Our scripts - load after Three.js is ready -->
+    <!-- Our scripts -->
     <script type="text/javascript">
-        // Wait for Three.js to be fully loaded
-        window.addEventListener('load', function() {
-            // Load our scripts after Three.js is ready
+        // Verify THREE is available before loading our scripts
+        if (typeof THREE === 'undefined') {
+            console.error('THREE is not defined. Loading Three.js again...');
+            // Try loading Three.js again from a different CDN
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/three@0.162.0/build/three.min.js';
+            script.onload = function() {
+                // Load our scripts after Three.js is confirmed available
+                loadOurScripts();
+            };
+            document.head.appendChild(script);
+        } else {
+            loadOurScripts();
+        }
+
+        function loadOurScripts() {
+            // Load menu.js first
             const menuScript = document.createElement('script');
             menuScript.src = 'menu.js';
+            menuScript.onload = function() {
+                // Load main.js after menu.js is loaded
+                const mainScript = document.createElement('script');
+                mainScript.src = 'main.js';
+                document.body.appendChild(mainScript);
+            };
             document.body.appendChild(menuScript);
-
-            const mainScript = document.createElement('script');
-            mainScript.src = 'main.js';
-            document.body.appendChild(mainScript);
-        });
+        }
     </script>
 </body>
 </html> 

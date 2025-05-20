@@ -1,3 +1,9 @@
+// Safety check for THREE
+if (typeof THREE === 'undefined') {
+    console.error('THREE is not defined. Please ensure Three.js is loaded before this script.');
+    throw new Error('THREE is not defined');
+}
+
 // Create scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x000000);
