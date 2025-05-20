@@ -103,34 +103,8 @@
         <div id="loading-text">0%</div>
     </div>
     
-    <!-- Three.js and dependencies from CDN -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/controls/OrbitControls.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.162.0/examples/js/loaders/GLTFLoader.js"></script>
-    
-    <!-- Our scripts -->
-    <script type="text/javascript">
-        // Simple function to check if a script has loaded
-        function waitForScript(scriptName, callback) {
-            if (window[scriptName]) {
-                callback();
-            } else {
-                setTimeout(() => waitForScript(scriptName, callback), 100);
-            }
-        }
-
-        // Wait for Three.js to be available
-        waitForScript('THREE', function() {
-            console.log('Three.js loaded successfully');
-            // Now load our scripts
-            const scripts = ['menu.js', 'main.js'];
-            scripts.forEach(src => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.type = 'text/javascript';
-                document.body.appendChild(script);
-            });
-        });
-    </script>
+    <!-- Load our application scripts as modules -->
+    <script type="module" src="/menu.js"></script>
+    <script type="module" src="/main.js"></script>
 </body>
 </html> 

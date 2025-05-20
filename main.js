@@ -1,8 +1,16 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+console.log('main.js starting execution...');
+
 // Safety check for THREE
 if (typeof THREE === 'undefined') {
-    console.error('THREE is not defined. Please ensure Three.js is loaded before this script.');
+    console.error('THREE is not defined in main.js!');
     throw new Error('THREE is not defined');
 }
+
+console.log('THREE is defined in main.js, proceeding with initialization...');
 
 // Create scene
 const scene = new THREE.Scene();
@@ -47,7 +55,7 @@ loadingManager.onError = (url) => {
 };
 
 // Create loader
-const loader = new THREE.GLTFLoader(loadingManager);
+const loader = new GLTFLoader(loadingManager);
 
 // Create a group to hold all models
 const modelGroup = new THREE.Group();
@@ -224,7 +232,7 @@ function clearCurrentModel() {
 }
 
 // Add OrbitControls
-const controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.1;
 controls.rotateSpeed = 0.7;

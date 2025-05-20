@@ -1,0 +1,34 @@
+{
+  "name": "mr-bridger-calculaus",
+  "version": "1.0.0",
+  "description": "An interactive 3D visualization of fractals using Three.js. View and explore the Menger Sponge and Sierpinski Triangle in your browser.",
+  "type": "module",
+  "main": "main.js",
+  "dependencies": {
+    "esbuild": "^0.21.5",
+    "nanoid": "^3.3.11",
+    "picocolors": "^1.1.1",
+    "postcss": "^8.5.3",
+    "rollup": "^4.40.2",
+    "source-map-js": "^1.2.1",
+    "three": "^0.162.0",
+    "vite": "^5.4.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unsuspectingchi/fractals.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unsuspectingchi/fractals/issues"
+  },
+  "homepage": "https://github.com/unsuspectingchi/fractals#readme"
+}
