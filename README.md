@@ -12,55 +12,71 @@ An interactive 3D visualization of fractals using Three.js. View and explore the
 
 ## Live Demo
 
-Visit the live demo at: `https://[your-username].github.io/[repository-name]`
+Visit the live demo at: https://unsuspectingchi.github.io/fractals/
 
 ## Local Development
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/[your-username]/[repository-name].git
+git clone https://github.com/unsuspectingchi/fractals.git
+cd fractals
 ```
 
-2. Open the project folder:
+2. Install dependencies:
 ```bash
-cd [repository-name]
+npm install
 ```
 
-3. Start a local server (using Python):
+3. Start the development server:
 ```bash
-# Python 3
-python -m http.server 8000
-
-# Python 2
-python -m SimpleHTTPServer 8000
+npm run dev
 ```
 
-4. Open your browser and visit:
-```
-http://localhost:8000
+The application will be available at http://localhost:3000
+
+## Building for Production
+
+To build the project for production:
+
+```bash
+npm run build
 ```
 
-## Project Structure
-```
-├── index.html          # Main HTML file
-├── main.js            # Three.js and fractal logic
-├── menu.js            # Menu interaction handling
-├── menger_sponge.glb  # Menger sponge model
-├── sierpinski.glb     # Sierpinski triangle model
-└── README.md          # This file
-```
+This will create optimized static files in the `dist` directory.
 
 ## Deployment
 
-This project is deployed using GitHub Pages. The site is automatically updated when you push to the main branch.
+The project is automatically deployed to GitHub Pages when you push to the `gh-pages` branch. To deploy manually:
+
+```bash
+npm run deploy
+```
+
+This will:
+1. Build the project
+2. Create a `.nojekyll` file to prevent GitHub Pages from processing the files
+3. Push the built files to the `gh-pages` branch
+
+## Project Structure
+
+```
+fractals/
+├── index.html          # Main HTML file
+├── main.js            # Main application code
+├── menu.js            # Menu interaction code
+├── vite.config.js     # Vite configuration
+├── package.json       # Project dependencies and scripts
+└── models/            # 3D model files
+    ├── menger_sponge.glb
+    └── sierpinski.glb
+```
 
 ## Technologies Used
 
 - Three.js for 3D rendering
-- JavaScript (ES6+)
-- HTML5
-- CSS3
+- Vite for development and building
+- GitHub Pages for hosting
 
 ## License
 
-MIT License - feel free to use this project for your own purposes. 
+ISC 
