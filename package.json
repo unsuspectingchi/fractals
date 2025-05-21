@@ -18,7 +18,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && touch dist/.nojekyll && git add dist && git commit -m 'Deploy to GitHub Pages' && git subtree push --prefix dist origin gh-pages"
+    "deploy": "npm run build && touch dist/.nojekyll && git add -f dist && git commit -m 'Deploy to GitHub Pages' && git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/unsuspectingchi/fractals/issues"
   },
-  "homepage": "https://github.com/unsuspectingchi/fractals#readme"
+  "homepage": "https://github.com/unsuspectingchi/fractals#readme",
+  "devDependencies": {
+    "terser": "^5.39.2"
+  }
 }

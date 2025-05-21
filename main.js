@@ -258,13 +258,103 @@ function updateControls(type) {
 
 // Function to load a specific fractal model
 function loadFractalModel(type) {
+    // Clear any existing model first
     clearCurrentModel();
     currentFractal = type;
     
-    // Update controls for the current fractal type
+    // Update controls and lighting
     updateControls(type);
+    updateLighting(type);
     
-    // Update lighting based on fractal type
+    // Reset loading progress
+    const progressBar = document.getElementById('loading-progress');
+    const loadingText = document.getElementById('loading-text');
+    const loadingContainer = document.getElementById('loading-container');
+    
+    progressBar.style.width = '0%';
+    loadingText.textContent = '0%';
+    loadingText.style.color = '#ffffff'; // Reset text color
+    loadingContainer.style.display = 'block';
+
+    // Load the appropriate model based on type
+    const modelPath = type === 'sierpinski' ? 'models/sierpinski.glb' : `models/${type}_sponge.glb`;
+    
+    console.log(`Attempting to load model from: ${modelPath}`);
+    
+    // Reset the loading manager
+    loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+        console.log(`Started loading: ${url}`);
+    };
+    
+    loadingManager.onProgress = (url, itemsLoaded, itemsTotal) => {
+        const progress = (itemsLoaded / itemsTotal) * 100;
+        console.log(`Loading progress: ${progress.toFixed(2)}%`);
+        progressBar.style.width = progress + '%';
+        loadingText.textContent = Math.round(progress) + '%';
+    };
+    
+    loadingManager.onLoad = () => {
+        console.log('Loading complete!');
+        loadingContainer.style.display = 'none';
+    };
+    
+    loadingManager.onError = (url) => {
+        console.error(`Error loading: ${url}`);
+        loadingText.textContent = 'Error loading model!';
+        loadingText.style.color = '#ff4444';
+    };
+
+    // Load the model
+    loader.load(
+        modelPath,
+        (gltf) => {
+            console.log(`Model loaded successfully: ${modelPath}`);
+            const model = gltf.scene;
+            
+            // Store the base model and its size
+            baseModel = model;
+            const box = new THREE.Box3().setFromObject(model);
+            baseModelSize = Math.max(
+                box.max.x - box.min.x,
+                box.max.y - box.min.y,
+                box.max.z - box.min.z
+            );
+            
+            // Create and add the fractal
+            let fractal;
+            if (type === 'sierpinski') {
+                fractal = createSimpleSierpinskiPyramid(4);
+                camera.position.set(8, 8, 8);
+            } else {
+                fractal = createMengerSponge(1, 2);
+                camera.position.set(0, 0, 5);
+            }
+            
+            modelGroup.add(fractal);
+            controls.target.set(0, 0, 0);
+            controls.update();
+            
+            // Hide loading container
+            loadingContainer.style.display = 'none';
+        },
+        (xhr) => {
+            if (xhr.lengthComputable) {
+                const progress = (xhr.loaded / xhr.total * 100);
+                console.log(`Download progress: ${progress.toFixed(2)}%`);
+                progressBar.style.width = progress + '%';
+                loadingText.textContent = Math.round(progress) + '%';
+            }
+        },
+        (error) => {
+            console.error('An error happened:', error);
+            loadingText.textContent = 'Error loading model!';
+            loadingText.style.color = '#ff4444';
+        }
+    );
+}
+
+// Helper function to update lighting based on fractal type
+function updateLighting(type) {
     if (type === 'sierpinski') {
         // Enable Sierpinski-specific lights
         sierpinskiCenterLight.visible = true;
@@ -288,84 +378,6 @@ function loadFractalModel(type) {
         // Adjust ambient light
         ambientLight.intensity = 1.5;
     }
-    
-    // Reset loading progress
-    const progressBar = document.getElementById('loading-progress');
-    const loadingText = document.getElementById('loading-text');
-    progressBar.style.width = '0%';
-    loadingText.textContent = '0%';
-    
-    // Show loading container
-    document.getElementById('loading-container').style.display = 'block';
-
-    // Load the appropriate model based on type
-    const modelPath = type === 'sierpinski' ? 'sierpinski.glb' : `${type}_sponge.glb`;
-    
-    loader.load(
-        modelPath,
-        (gltf) => {
-            const model = gltf.scene;
-            
-            // Store the base model and its size
-            baseModel = model;
-            const box = new THREE.Box3().setFromObject(model);
-            baseModelSize = Math.max(
-                box.max.x - box.min.x,
-                box.max.y - box.min.y,
-                box.max.z - box.min.z
-            );
-            
-            // Apply materials to base model
-            const material = new THREE.MeshStandardMaterial({
-                color: 0x4169E1,
-                metalness: 0.7,
-                roughness: 0.2,
-                transparent: true,
-                opacity: 1.0,
-                flatShading: true
-            });
-            
-            model.traverse((child) => {
-                if (child.isMesh) {
-                    child.material = material;
-                }
-            });
-            
-            // Create the appropriate fractal based on type
-            if (type === 'sierpinski') {
-                // Create the 5-model Sierpinski pyramid
-                const pyramid = createSimpleSierpinskiPyramid(4);
-                modelGroup.add(pyramid);
-                // Adjust camera for better view
-                camera.position.set(8, 8, 8);
-                controls.target.set(0, 0, 0);
-                controls.update();
-            } else {
-                // Create Menger sponge pattern
-                const fractal = createMengerSponge(1, 2);
-                modelGroup.add(fractal);
-                camera.position.set(0, 0, 5);
-                controls.target.set(0, 0, 0);
-                controls.update();
-            }
-            
-            // Hide loading container
-            document.getElementById('loading-container').style.display = 'none';
-        },
-        (xhr) => {
-            const progress = (xhr.loaded / xhr.total * 100);
-            const progressBar = document.getElementById('loading-progress');
-            const loadingText = document.getElementById('loading-text');
-            progressBar.style.width = progress + '%';
-            loadingText.textContent = Math.round(progress) + '%';
-        },
-        (error) => {
-            console.error('An error happened:', error);
-            const loadingText = document.getElementById('loading-text');
-            loadingText.textContent = 'Error loading model!';
-            loadingText.style.color = '#ff4444';
-        }
-    );
 }
 
 // Listen for fractal change events
