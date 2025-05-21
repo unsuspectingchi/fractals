@@ -277,7 +277,8 @@ function loadFractalModel(type) {
     loadingContainer.style.display = 'block';
 
     // Load the appropriate model based on type
-    const modelPath = type === 'sierpinski' ? 'models/sierpinski.glb' : `models/${type}_sponge.glb`;
+    const modelPath = type === 'sierpinski' ? '/fractals/models/sierpinski.glb' : `/fractals/models/${type}_sponge.glb`;
+
     
     console.log(`Attempting to load model from: ${modelPath}`);
     
