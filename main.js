@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 console.log('main.js starting execution...');
 
@@ -56,6 +57,9 @@ loadingManager.onError = (url) => {
 
 // Create loader
 const loader = new GLTFLoader(loadingManager);
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/');
+loader.setDRACOLoader(dracoLoader);
 
 // Create a group to hold all models
 const modelGroup = new THREE.Group();
@@ -277,7 +281,10 @@ function loadFractalModel(type) {
     loadingContainer.style.display = 'block';
 
     // Load the appropriate model based on type
-    const modelPath = type === 'sierpinski' ? '/fractals/models/sierpinski.glb' : `/fractals/models/${type}_sponge.glb`;
+    // const modelPath = type === 'sierpinski' ? '/fractals/models/sierpinski.glb' : `/fractals/models/${type}_sponge.glb`;
+    const modelPath = type === 'sierpinski' 
+    ? '/fractals/models/sierpinski-compressed.glb' 
+    : '/fractals/models/menger_sponge-compressed.glb';
 
     
     console.log(`Attempting to load model from: ${modelPath}`);
