@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractal Explorer</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+        #menu-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        .menu-tab {
+            padding: 12px 24px;
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            background: transparent;
+        }
+        .menu-tab:hover {
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .menu-tab.active {
+            background: rgba(65, 105, 225, 0.3);
+            color: white;
+        }
+        #loading-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 16px;
+            color: white;
+            font-family: inherit;
+            text-align: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #loading-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        #loading-progress {
+            width: 0%;
+            height: 100%;
+            background: #4169E1;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+        #loading-text {
+            margin-top: 12px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+  <script type="module" crossorigin src="/fractals/assets/index-tXIfkMEO.js"></script>
+  <link rel="modulepreload" crossorigin href="/fractals/assets/three-BZ6b_Rf7.js">
+  <link rel="modulepreload" crossorigin href="/fractals/assets/vendor-Cx0zTeyC.js">
+</head>
+<body>
+    <div id="menu-container">
+        <button class="menu-tab active" data-fractal="menger">Menger</button>
+        <button class="menu-tab" data-fractal="sierpinski">Sierpinski</button>
+        <button class="menu-tab" data-fractal="newton">Newton</button>
+    </div>
+    <div id="loading-container">
+        <div>Loading Menger Sponge...</div>
+        <div id="loading-bar">
+            <div id="loading-progress"></div>
+        </div>
+        <div id="loading-text">0%</div>
+    </div>
+    
+    <!-- Load our application scripts as modules -->
+</body>
+</html> 
