@@ -280,14 +280,17 @@ function loadFractalModel(type) {
     loadingText.style.color = '#ffffff'; // Reset text color
     loadingContainer.style.display = 'block';
 
+    
     // Load the appropriate model based on type
     // const modelPath = type === 'sierpinski' ? '/fractals/models/sierpinski.glb' : `/fractals/models/${type}_sponge.glb`;
     const modelPath = type === 'sierpinski' 
-    ? '/fractals/models/sierpinski-compressed.glb' 
-    : '/fractals/models/menger_sponge-compressed.glb';
+    ? '/fractals/models/sierpinski.glb' 
+    : '/fractals/models/menger_sponge.glb';
 
     
     console.log(`Attempting to load model from: ${modelPath}`);
+
+    console.log('Resolved model path:', new URL(modelPath, window.location.href).href);
     
     // Reset the loading manager
     loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
@@ -354,7 +357,12 @@ function loadFractalModel(type) {
             }
         },
         (error) => {
-            console.error('An error happened:', error);
+          console.error('Loader error:', error);
+          // Debug: Fetch the file manually and log its content
+          fetch('/fractals/models/sierpinski.glb')
+            .then(res => res.text())
+            .then(text => console.log('Fetched file content (first 100 chars):', text.slice(0, 100)))
+            .catch(e => console.error('Fetch error:', e));
             loadingText.textContent = 'Error loading model!';
             loadingText.style.color = '#ff4444';
         }
