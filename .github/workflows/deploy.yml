@@ -1,0 +1,36 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]  # Trigger on pushes to `main`
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # Use a clean Ubuntu environment
+
+    steps:
+      # 1. Check out your repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Use Node 18 (or your preferred version)
+
+      # 3. Install dependencies (npm, yarn, or pnpm)
+      - name: Install dependencies
+        run: npm install  # or `yarn install` / `pnpm install`
+
+      # 4. Build your Vite app (generates `dist/` folder)
+      - name: Build
+        run: npm run build
+
+      # 5. Deploy `dist/` to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Auto-generated secret
+          publish_dir: ./dist  # Deploy the `dist` folder
+          keep_files: false    # Overwrite existing files
