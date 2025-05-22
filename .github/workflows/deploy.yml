@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest  # Use a clean Ubuntu environment
     permissions:
       contents: write  # Required to push to gh-pages branch
+      pages: write
+      id-token: write
 
     steps:
       # 1. Check out your repo
